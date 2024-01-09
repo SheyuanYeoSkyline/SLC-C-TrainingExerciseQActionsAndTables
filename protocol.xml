@@ -45,8 +45,8 @@ Any inquiries can be addressed to:
 -->
 
 <Protocol xmlns="http://www.skyline.be/protocol">
-	<Name>Excercise QAction And Tables</Name>
-	<Description>Excercise QAction And Tables DataMiner connector</Description>
+	<Name>Excercise QActions And Tables</Name>
+	<Description>Excercise QActions And Tables DataMiner connector</Description>
 	<Version>1.0.0.1</Version>
 	<IntegrationID>DMS-DRV-</IntegrationID>
 	<Provider>Skyline Communications</Provider>
