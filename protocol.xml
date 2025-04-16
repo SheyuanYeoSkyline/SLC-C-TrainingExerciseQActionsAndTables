@@ -48,32 +48,452 @@ Any inquiries can be addressed to:
 	<Name>Excercise QActions And Tables</Name>
 	<Description>Excercise QActions And Tables DataMiner connector</Description>
 	<Version>1.0.0.1</Version>
-	<IntegrationID>DMS-DRV-</IntegrationID>
+	<IntegrationID>DMS-DRV-0000</IntegrationID>
 	<Provider>Skyline Communications</Provider>
-	<Vendor></Vendor>
-	<VendorOID>1.3.6.1.4.1.8813.2.</VendorOID>
-	<DeviceOID></DeviceOID>
-	<ElementType></ElementType>
+	<Vendor>Test</Vendor>
+	<VendorOID>1.3.6.1.4.1.8813.2.00</VendorOID>
+	<DeviceOID>00</DeviceOID>
+	<ElementType>virtual</ElementType>
 	<Type relativeTimers="true">virtual</Type>
-	<Display defaultPage="General" pageOrder="General"/>
+	<Display defaultPage="Overview" pageOrder="Overview;Transport Streams;Services" wideColumnPages=""/>
 	<SNMP includepages="true">auto</SNMP>
 
 	<Compliancies>
 		<CassandraReady>true</CassandraReady>
-		<MinimumRequiredVersion>10.1.0.0 - 9966</MinimumRequiredVersion>
+		<MinimumRequiredVersion>10.3.0.0 - 12752</MinimumRequiredVersion>
 	</Compliancies>
 
+	<Relations>
+		<Relation name="TransportStreamServices" path="1000;2000"/>
+	</Relations>
+	
 	<Params>
 		<Param id="2">
 			<Name>AfterStartup</Name>
 			<Description>After Startup</Description>
 			<Type>dummy</Type>
 		</Param>
+		
+		<!--Poll-->
+		<Param id="10">
+			<Name>Poll</Name>
+			<Type>write</Type>
+			<Information>
+				<Subtext>Dummy parameter to trigger polling.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Transport Streams</Page>
+						<Column>0</Column>
+						<Row>1</Row>
+					</Position>
+					<Position>
+						<Page>Services</Page>
+						<Column>0</Column>
+						<Row>1</Row>
+					</Position>
+					<Position>
+						<Page>Overview</Page>
+						<Column>0</Column>
+						<Row>2</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type width="110">button</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Force Poll</Display>
+						<Value>1</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		
+		<!--Transport Streams Table-->
+		<Param id="1000">
+			<Name>TransportStreams</Name>
+			<Description>Transport Streams</Description>
+			<Type>array</Type>
+			<Information>
+				<Subtext>Table of transport streams.</Subtext>
+			</Information>
+			<ArrayOptions index="0" options=";naming=/1002">
+				<ColumnOption idx="0" pid="1001" type="retrieved" options=""/>
+				<ColumnOption idx="1" pid ="1002" type="retrieved" options=""></ColumnOption>
+				<ColumnOption idx="2" pid ="1003" type="retrieved" options=""></ColumnOption>
+				<ColumnOption idx="3" pid ="1004" type="retrieved" options=""></ColumnOption>
+				<ColumnOption idx="4" pid ="1005" type="retrieved" options=";enableHeaderSum;enableHistogram;enableHeatmap"></ColumnOption>
+				<ColumnOption idx="5" pid ="1007" type="retrieved" options=""></ColumnOption>
+			</ArrayOptions>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Transport Streams</Page>
+						<Column>0</Column>
+						<Row>0</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<Type options="tab=columns:1001|0-1002|1-1003|2-1004|3-1005|4-1007|5,width:60-160-100-100-100-160,sort:STRING-STRING-STRING-STRING-STRING-INT|ASC|0,lines:25,filter:true">table</Type>
+			</Measurement>
+		</Param>
+		<Param id="1001" trending="false">
+			<Name>TransportStreamsId</Name>
+			<Description>ID (Transport Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>This is the key used internally by DataMiner to identify the table entries.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="1002" trending="false">
+			<Name>TransportStreamsName</Name>
+			<Description>Name (Transport Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Name of the transport stream.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="1003" trending="false">
+			<Name>TransportStreamsMulticast</Name>
+			<Description>Multicast (Transport Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Multicast of the transport stream.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="1004" trending="false">
+			<Name>TransportStreamsSourceIp</Name>
+			<Description>Source IP (Transport Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Source IP of the transport stream.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="1005" trending="false">
+			<Name>TransportStreamsNetworkId</Name>
+			<Description>Network ID (Transport Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Network ID of the transport stream.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<!-- SuppressValidator 2.9.7 Network ID does not have units. -->
+			<Alarm>
+				<Monitored>true</Monitored>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Range>
+					<Low>1</Low>
+				</Range>
+			</Display>
+			<!-- /SuppressValidator 2.9.7 -->
+			<Measurement>
+				<Type>number</Type>
+			</Measurement>
+		</Param>
+		<Param id="1007" trending="false">
+			<Name>TransportStreamsLastPolledTimestamp</Name>
+			<Description>Last Polled Timestamp (Transport Streams)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>The most recent update time that the information of transport stream was updated.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Decimals>8</Decimals>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Decimals>8</Decimals>
+			</Display>
+			<Measurement>
+				<Type options="datetime">number</Type>
+			</Measurement>
+		</Param>
+		
+		<!--Services Table-->
+		<Param id="2000">
+			<Name>Services</Name>
+			<Description>Services</Description>
+			<Type>array</Type>
+			<ArrayOptions index="0" options=";naming=/1002,2002">
+				<ColumnOption idx="0" pid="2001" type="retrieved" options=""/>
+				<ColumnOption idx="1" pid="2002" type="retrieved" options=""/>
+				<ColumnOption idx="2" pid="2003" type="retrieved" options=""/>
+				<ColumnOption idx="3" pid="2004" type="retrieved" options=""/>
+				<ColumnOption idx="4" pid="2005" type="retrieved" options=""/>
+				<ColumnOption idx="5" pid="2006" type="retrieved" options=";foreignKey=1000" />
+				<ColumnOption idx="6" pid="2999" type="displaykey" options="" />
+			</ArrayOptions>
+			<Information>
+				<Subtext>tableInformation</Subtext>
+			</Information>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Services</Page>
+						<Column>0</Column>
+						<Row>0</Row>
+					</Position>
+				</Positions>
+			</Display>
+			<Measurement>
+				<!-- SuppressValidator 2.31.9 There is no need to sort by the data(time) column for this table. -->
+				<Type options="tab=columns:2001|0-2002|1-2006|5-2999|6-2003|2-2004|3-2005|4,width:60-0-0-200-120-120-160,sort:STRING|ASC|0-STRING-STRING-STRING-STRING-STRING-INT|ASC|1,lines:25,filter:true">table</Type>
+				<!-- /SuppressValidator 2.31.9 -->
+			</Measurement>
+		</Param>
+		<Param id="2001" trending="false">
+			<Name>ServicesServiceId</Name>
+			<Description>ID (Services)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>This is the key used internally by DataMiner to identify the table entries.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Alarm>
+				<Monitored>false</Monitored>
+			</Alarm>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="2002" trending="false">
+			<Name>ServicesServiceName</Name>
+			<Description>Service Name (Services)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Name of the service.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="2003" trending="false">
+			<Name>ServicesServiceType</Name>
+			<Description>Service Type (Services)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Type of the service.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+				<Discreets>
+					<Discreet>
+						<Display>Digital Radio</Display>
+						<Value>digital_radio</Value>
+					</Discreet>
+					<Discreet>
+						<Display>Digital Television</Display>
+						<Value>digital_television</Value>
+					</Discreet>
+				</Discreets>
+			</Measurement>
+		</Param>
+		<Param id="2004" trending="false">
+			<Name>ServicesServiceProvider</Name>
+			<Description>Service Provider (Services)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Provider of the service.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="2005" trending="false">
+			<Name>ServicesLastPolledTimestamp</Name>
+			<Description>Last Polled Timestamp (Services)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>The most recent time the service information was updated.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>numeric text</RawType>
+				<Type>double</Type>
+				<LengthType>next param</LengthType>
+				<Decimals>8</Decimals>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Decimals>8</Decimals>
+			</Display>
+			<Measurement>
+				<Type options="datetime">number</Type>
+			</Measurement>
+		</Param>
+		<Param id="2006" trending="false">
+			<Name>ServicesParentTransportStreamId</Name>
+			<Description>Transport Stream ID (Services)</Description>
+			<Information>
+				<Subtext>ID of the transport stream for this service.</Subtext>
+			</Information>
+			<Type>read</Type>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		<Param id="2999" trending="false">
+			<Name>ServicesDisplayKey</Name>
+			<Description>Display Key (Services)</Description>
+			<Type>read</Type>
+			<Information>
+				<Subtext>Display key for services.</Subtext>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+			</Display>
+			<Measurement>
+				<Type>string</Type>
+			</Measurement>
+		</Param>
+		
+		<!--Tree Control-->
+		<Param id="10000" trending="false">
+			<Name>Overview</Name>
+			<Description>Overview</Description>
+			<Type>read</Type>
+			<Information>
+			</Information>
+			<Interprete>
+				<RawType>other</RawType>
+				<Type>string</Type>
+				<LengthType>next param</LengthType>
+			</Interprete>
+			<Display>
+				<RTDisplay>true</RTDisplay>
+				<Positions>
+					<Position>
+						<Page>Overview</Page>
+						<Column>0</Column>
+						<Row>0</Row>
+					</Position>
+				</Positions>
+			</Display>
+		</Param>
+		
 	</Params>
 
+	<TreeControls>
+		<TreeControl parameterId="10000">
+			<Hierarchy>
+				<Table id="1000"/>
+				<Table id="2000" parent="1000"/>
+			</Hierarchy>
+		</TreeControl>
+	</TreeControls>
+	
 	<QActions>
 		<QAction id="1" name="Precompiled Code" encoding="csharp" options="precompile" />
 		<QAction id="2" name="After Startup" encoding="csharp" triggers="2" />
+		<QAction id="10" name="Poll Transport Streams" encoding="csharp" triggers="10">
+		</QAction>
 	</QActions>
 
 	<Groups>
@@ -83,6 +503,14 @@ Any inquiries can be addressed to:
 			<Type>poll action</Type>
 			<Content>
 				<Action>2</Action>
+			</Content>
+		</Group>
+		<Group id="10">
+			<Name>PollData</Name>
+			<Description>Poll Data</Description>
+			<Type>poll action</Type>
+			<Content>
+				<Action>10</Action>
 			</Content>
 		</Group>
 	</Groups>
@@ -110,6 +538,11 @@ Any inquiries can be addressed to:
 			<On id="2">parameter</On>
 			<Type>run actions</Type>
 		</Action>
+		<Action id="10">
+			<Name>Poll QAction</Name>
+			<On id="10">parameter</On>
+			<Type>run actions</Type>
+		</Action>
 	</Actions>
 
 	<Timers>
@@ -125,6 +558,7 @@ Any inquiries can be addressed to:
 			<Time initial="true" dataDisplay="30000">60000</Time>
 			<Interval>75</Interval>
 			<Content>
+				<Group>10</Group>
 			</Content>
 		</Timer>
 		<Timer id="3">
